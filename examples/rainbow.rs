@@ -1,9 +1,9 @@
 extern crate termion;
 
 use std::io::{stdin, stdout, Write};
-use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
+use termion::{event::Key, terminal_size};
 
 fn rainbow<W: Write>(stdout: &mut W, blue: u8) {
     write!(
@@ -21,14 +21,13 @@ fn rainbow<W: Write>(stdout: &mut W, blue: u8) {
             write!(
                 stdout,
                 "{} ",
-                termion::color::Bg(termion::color::Rgb(red, green, blue))
+                termion::color::Bg(termion::color::Rgb(red, green, blue)),
             )
             .unwrap();
         }
-        write!(stdout, "\n\r").unwrap();
     }
 
-    writeln!(stdout, "{}b = {}", termion::style::Reset, blue).unwrap();
+    writeln!(stdout, "\n\r{}b = {}", termion::style::Reset, blue).unwrap();
 }
 
 fn main() {
